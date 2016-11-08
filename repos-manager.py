@@ -36,7 +36,7 @@ class occPlugin(PluginsClass):
         self.hbox=Gtk.HBox()
         self.add(self.hbox)
         self.vbox1=Gtk.VBox()
-        self.vbox2=Gtk.VBox(homogeneous=True,spacing=5)
+        self.vbox2=Gtk.VBox()
         self.grid=Gtk.Grid()
         self.vbox2.pack_start(self.grid,True,True,0)
         self.hbox.pack_start(self.vbox1,True,True,0)
