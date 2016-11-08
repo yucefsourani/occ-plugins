@@ -59,7 +59,7 @@ class occPlugin(PluginsClass):
                 self.switch=Gtk.Switch()
                 self.switch.set_active(True)
             
-            self.switch.connect("state-set",self.__enable_or_disable,[k,v])
+            self.switch.connect("state-set",self.__enable_or_disable,k)
             self.vbox1.pack_start(self.name,True,True,0)
             self.grid.attach(self.switch,0,self.count,1,1)
             self.count+=1
@@ -70,7 +70,7 @@ class occPlugin(PluginsClass):
     
     def __enable_or_disable(self,b,s,data):
         if not b.get_state():
-            check=self.ccw.mechanism('run','system',"dnf config-manager --set-enable %s -y"%data[0])
+            check=self.ccw.mechanism('run','system',"dnf config-manager --set-enable %s -y"%data)
             if check!='0':
                 error(_("unexpected return code, possible an error had occurred"), self.ccw)
                 b.set_state(False)
@@ -79,7 +79,7 @@ class occPlugin(PluginsClass):
                 
             
         else:
-            check=self.ccw.mechanism('run','system',"dnf config-manager --set-disable %s -y"%data[0])
+            check=self.ccw.mechanism('run','system',"dnf config-manager --set-disable %s -y"%data)
             if check!='0':
                 error(_("unexpected return code, possible an error had occurred"), self.ccw)
                 b.set_state(True)
