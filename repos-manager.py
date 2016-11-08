@@ -29,7 +29,7 @@ priority = 100
 class occPlugin(PluginsClass):
     def __init__(self,ccw):
         PluginsClass.__init__(self, ccw, caption, category, priority)
-        self.__reposdirs=["/etc/yum.repos.d/","/etc/distro.repos.d"]
+        self.__reposdirs=["/etc/yum.repos.d/","/etc/distro.repos.d/"]
         self.__reposinformations=None
         self.__refresh_repos_informations()
         
