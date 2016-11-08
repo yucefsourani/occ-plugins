@@ -1,4 +1,4 @@
 # occ-plugins
-Ojuba Control Center Plugins
+Plugins for Ojuba Control Center
 
 https://github.com/ojuba-org/occ
