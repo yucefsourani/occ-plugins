@@ -15,7 +15,7 @@ Copyright © 2009, Ojuba Team <core@ojuba.org>
 import os
 from gi.repository import Gtk
 from OjubaControlCenter.pluginsClass import PluginsClass
-from OjubaControlCenter.widgets import  error, info
+from OjubaControlCenter.widgets import  error
 
 
 ## NOTE: these global vars is loader validators
@@ -87,7 +87,7 @@ class occPlugin(PluginsClass):
                 return True
             
         
-        #info(_('Done.'), self.ccw)
+        
     
     def __get_information_from_repofile(self,repo_file):
         result={}
