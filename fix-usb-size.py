@@ -48,7 +48,8 @@ class occPlugin(PluginsClass):
         hbox2.pack_start(self.labeltarget, False,False,2)
         
         self.target_dev_ls=Gtk.ComboBoxText(tooltip_text=_("Select Device"))
-        hbox2.pack_start(self.target_dev_ls, True,True,2)
+	self.target_dev_ls.props.width_request=510
+        hbox2.pack_start(self.target_dev_ls, False,False,2)
         
         buttonrefresh=Gtk.Button(stock=Gtk.STOCK_REFRESH,tooltip_text=_("Refresh Device"))
         buttonrefresh.connect('clicked', self.__refresh_target_dev)
