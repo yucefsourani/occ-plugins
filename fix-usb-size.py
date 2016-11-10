@@ -63,7 +63,7 @@ class occPlugin(PluginsClass):
         buttonfix=Gtk.Button(_('Run Fix'),tooltip_text=_("Run fix flash"))
         buttonfix.connect('clicked', self.__fix_flash_memory)
         buttonfix.set_size_request(110,30)
-        hbox3.pack_start(buttonfix,False,False,315)
+        hbox3.pack_start(buttonfix,False,False,290)
         
         self.__refresh_target_dev()
 
