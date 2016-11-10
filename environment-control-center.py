@@ -68,10 +68,8 @@ class occPlugin(PluginsClass):
         
         elif self.desktop=="GNOME":
             vb1.pack_start(LaunchButton(_('%s Control Center' %self.desktop_cc[ self.desktop ] [0] ),self.desktop_cc[ self.desktop ] [1]),True,True,0)
-            
-            if os.path.exists("/usr/bin/gnome-tweak-tool"):
-                vb1.pack_start(LaunchButton(_('Gnome Tweak Tool'),'/usr/bin/gnome-tweak-tool'),False,False,5)
-                vb.pack_start(hb,False,False,6)
+            vb1.pack_start(LaunchButton(_('Gnome Tweak Tool'),'/usr/bin/gnome-tweak-tool'),False,False,5)
+            vb.pack_start(hb,False,False,6)
         
         else:
             vb1.pack_start(LaunchButton(_('%s Control Center' %self.desktop_cc[ self.desktop ] [0] ),self.desktop_cc[ self.desktop ] [1]),True,True,0)
