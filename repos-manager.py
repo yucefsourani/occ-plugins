@@ -12,14 +12,14 @@ Copyright © 2009, Ojuba Team <core@ojuba.org>
         The Latest version of the license can be found on
         "http://waqf.ojuba.org/license"
 """
-import os
+import os,dnf
 from gi.repository import Gtk
 from OjubaControlCenter.pluginsClass import PluginsClass
 from OjubaControlCenter.widgets import  error
 
-
+#ملاحظة في فيدورا 25 و 24  تحتاج الإضافة حزمة python2-dnf-plugins-core لا أعلم عن باقي الإصدارات.
 ## NOTE: these global vars is loader validators
-category = 'install'
+category = 'desktop'
 caption = _('Manager repos')
 description = _("Manager Repos")
 priority = 100
@@ -29,11 +29,13 @@ priority = 100
 class occPlugin(PluginsClass):
     def __init__(self,ccw):
         PluginsClass.__init__(self, ccw, caption, category, priority)
-        self.__reposdirs=["/etc/yum.repos.d/","/etc/distro.repos.d/"]
-        self.__reposinformations=None
-        self.__refresh_repos_informations()
+
+	self.base=dnf.Base()
+	self.base.read_all_repos()
+	self.allrepos=self.base.repos.all()
+	
         self.count=0
-        self.hbox=Gtk.HBox()
+        self.hbox=Gtk.HBox(spacing=20)
         self.add(self.hbox)
         self.vbox1=Gtk.VBox()
         self.vbox2=Gtk.VBox()
@@ -50,16 +52,15 @@ class occPlugin(PluginsClass):
         
         
         
-        for k,v in self.__reposinformations.items():
-            self.name=Gtk.Label(k)
-            
-            if v=="Disabled":
+        for repo in self.allrepos:
+            self.name=Gtk.Label(repo.name)
+            if not repo.enabled:
                 self.switch=Gtk.Switch()
             else:
                 self.switch=Gtk.Switch()
                 self.switch.set_active(True)
             
-            self.switch.connect("state-set",self.__enable_or_disable,k)
+            self.switch.connect("state-set",self.__enable_or_disable,repo.hawkey_repo.name)
             self.vbox1.pack_start(self.name,True,True,0)
             self.grid.attach(self.switch,0,self.count,1,1)
             self.count+=1
@@ -85,41 +86,4 @@ class occPlugin(PluginsClass):
                 b.set_state(True)
                 b.set_active(True)
                 return True
-            
-        
-        
-    
-    def __get_information_from_repofile(self,repo_file):
-        result={}
-        key=""
-        try:
-            with open(repo_file,"r") as repofile:
-                for line in repofile:
-                    line=line.strip()
-                    if line.startswith("["):
-                        result.setdefault(line[1:-1],None)
-                        key=line[1:-1]
-                    if line.startswith("enable"):
-                        result[key]=line[8:]
-                        if line[8:]=="0" or line[8:]=="false" or line[8:]=="False":
-                            result[key]="Disabled"
-                        else:
-                            result[key]="Enabled"
-        except:
-            return None
-        
-        return result
-    
-    def __get_information_from_location(self):
-        result={}
-        locations=self.__reposdirs
-        for location in locations:
-            if os.path.isdir(location):
-                for f in os.listdir(location):
-                    if f.endswith(".repo"):
-                        informations=self.__get_information_from_repofile("%s%s"%(location,f))
-                        if informations!=None:
-                            for k,v in informations.items():
-                                result.setdefault(k,v)
-        return result
 
